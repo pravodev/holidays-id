@@ -1,0 +1,29 @@
+{
+    "name": "pravodev/holidays-id",
+    "description": "Holiday National for Indonesia",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Rifqi Khoeruman Azam",
+            "email": "pravodev@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PravoDev\\HolidaysId\\": "src"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PravoDev\\HolidaysId\\ServiceProvider"
+            ],
+            "aliases": {
+                "Libur": "PravoDev\\HolidaysId\\Facade"
+            }
+        }
+    }
+}
