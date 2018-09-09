@@ -10,7 +10,6 @@
 use Illuminate\Http\Request;
 use pQuery\IQuery\pQuery;
 use \Symfony\Component\DomCrawler\Crawler;
-use \Goutte\Client;
 
 namespace PravoDev\HolidaysId;
 
@@ -113,8 +112,6 @@ class Scrapper
      */
     public function writeData()
     {
-        $client = new \Goutte\Client();
-
         $url = $this->getUrl();
 
         $currentData = $this->getFileContent();
