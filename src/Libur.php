@@ -22,6 +22,13 @@
         return $this;
     }
 
+    public function parse($date)
+    {
+        $dateObject = \DateTime::createFromFormat('Y-m-d', $date);;
+        $this->setYear($dateObject->format('Y'));
+        return $this;
+    }
+
     public function isHoliday($date = null)
     {
         $date = $date ?? $this->date;

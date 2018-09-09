@@ -23,6 +23,12 @@ class Scrapper
 
     private $path = '/json/hari-libur.json';
 
+    public function __construct($year = null)
+    {
+        if($year){
+            $this->year = $year;
+        }
+    }
     /**
      * Set year property
      *
@@ -66,7 +72,7 @@ class Scrapper
      */
     public function getKey()
     {
-        return $this->apiKey ?? config('holidays_id.calendar_id');
+        return $this->apiKey ?? config('holidays_id.api_key');
     }
 
     /**
@@ -76,7 +82,7 @@ class Scrapper
      */
     public function getCalendar()
     {
-        return $this->calendar ?? config('holidays_id.api_key');
+        return $this->calendar ?? config('holidays_id.calendar_id');
     }
 
     /**
@@ -159,18 +165,18 @@ class Scrapper
      *
      * @param int $year
      */
-    public function setResource($year)
+    public function setResource()
     {
-        $this->year = $year;
         $data = $this->getFileContent();
-        $searhByYear = array_key_exists($year, $data);
+        $searhByYear = array_key_exists($this->year, $data);
+
         if(empty($data) || $searhByYear == false){
             $this->writeData();
-            return $this->setResource($year);
+            return $this->setResource($this->year);
         }
 
         if(count($data)){
-            if($year){
+            if($this->year){
                 $this->resource = $data[$this->year];
             }else{
                 $this->resource = collect($data);
@@ -183,10 +189,10 @@ class Scrapper
     /**
      * get data;
      */
-    public function getData($year = null)
+    public function getData()
     {
         if(empty($this->resource)){
-            $this->setResource($year);
+            $this->setResource();
         }
         return $this->resource;
     }
@@ -196,7 +202,7 @@ class Scrapper
      */
     public function find($value, $key, $year)
     {
-        $data = collect($this->getData($year))->filter(function($calendar) use ($value, $key){
+        $data = collect($this->getData())->filter(function($calendar) use ($value, $key){
             if($calendar[$key] == $value){
                 return $calendar;
             }
