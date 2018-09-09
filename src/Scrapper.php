@@ -21,7 +21,7 @@ class Scrapper
 
     public $year = '2018';
 
-    private $path = '/data/hari-libur.json';
+    private $path = '/json/hari-libur.json';
 
     /**
      * Set year property
@@ -86,7 +86,7 @@ class Scrapper
     */
     public function getPath()
     {
-        return dirname(__FILE__) . $this->path;
+        return storage_path() . $this->path;
     }
 
     /**
@@ -148,7 +148,10 @@ class Scrapper
      */
     public function getFileContent()
     {
-        return json_decode(file_get_contents($this->getPath()), true);
+        if(file_exists($this->getPath())){
+            return json_decode(file_get_contents($this->getPath()), true);
+        }
+        return [];
     }
 
     /**
